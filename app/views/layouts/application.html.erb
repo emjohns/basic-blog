@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BetterBlog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+
+          <ul class="nav navbar-nav">
+            <li>
+          <%= link_to 'Home', posts_path %>
+        </li>
+        <li>
+          <%= link_to 'New Post', new_post_path %>
+        </li>
+        <li>
+          <% if user_signed_in? %>
+            <%= link_to 'My Posts', user_posts_path(name: current_user.username) %>
+          <% end %>
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <% if user_signed_in? %>
+              <% if current_user.avatar.url %>
+              <%= image_tag current_user.avatar.url, class:"img-rounded", width:"20px" %>
+              <% else %>
+              <%= gravatar_tag current_user.email, size: 20 %>
+              <% end %>
+              Welcome, <%= current_user.username %>!
+            <%end%>
+            <span class="glyphicon glyphicon-chevron-down"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <div class="navbar-login">
+                <div class="row">
+                  <div class="col-lg-5">
+                    <%if user_signed_in? %>
+                    <p class="text-center">
+                      <% if current_user.avatar.url %>
+                      <%= image_tag current_user.avatar.url, class:"img-rounded", width:"20px" %>
+                      <% else %>
+                      <%= gravatar_tag current_user.email, class:"img-rounded", size: 60 %>
+                      <% end %>
+                      <strong><%= current_user.username %></strong>
+                    </p>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <p class="text-center small"><%= current_user.email %></p>
+                    <p class="text-center">
+                      <%= link_to "View Profile", users_view_path, class: "btn btn-primary btn-sm" %>
+                    </p>
+                    <p class="text-center">
+                      <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-primary btn-sm" %>
+                    </p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="navbar-login navbar-login-session">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <p class="text-center">
+                      <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger btn-sm" %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      </div>
+
+    </nav>
+
+    <div>
+      <%= yield %>
+    </div>
+  </body>
+</html>

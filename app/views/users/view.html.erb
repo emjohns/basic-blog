@@ -1,0 +1,20 @@
+<div class="container">
+
+<h2>View User Profile</h2>
+
+<p><strong>Email:</strong> <%= current_user.email %></p>
+
+<p><strong>Username:</strong> <%= current_user.username %></p>
+
+<p><strong>Profile Picture:</strong></p>
+<div>
+  <% if current_user.avatar? %>
+  <%= image_tag current_user.avatar.url, class:"img-rounded", width:"72px" %>
+  <% else %>
+    <%= gravatar_tag current_user.email, class:"img-rounded", size: 60 %>
+  <% end %>
+</div>
+<br />
+<div class="actions">
+  <%= link_to "Update", edit_user_registration_path, {class: "btn btn-primary"} %>
+</div>

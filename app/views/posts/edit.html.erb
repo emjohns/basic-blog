@@ -1,0 +1,16 @@
+<div class="container col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+
+<div class="page-header">
+
+<h1>Editing Post</h1>
+</div>
+  <div class="well">
+<%= render 'form', post: @post %>
+  </div>
+
+
+<%= link_to 'Show', @post %> |
+<%= link_to 'Back', posts_path %> |
+<%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }%>
+
+</div>

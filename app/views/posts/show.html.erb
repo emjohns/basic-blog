@@ -1,0 +1,57 @@
+<div class="container col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h2><%= @post.title %></h2>
+  <h3><small>
+    <% if @post.user.avatar.url %>
+    <%= image_tag @post.user.avatar.url, class:"img-rounded", width:"20px" %>
+    <% else %>
+      <%= gravatar_tag @post.user.email, class:"img-rounded", size: 60 %>
+    <% end %>
+    <%= @post.user.username %>
+  </small></h3>
+</div>
+<div>
+  <p>
+    <%= @post.blog_entry %>
+  </p>
+</div>
+
+<div>
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }%> |
+  <%= link_to 'Back', posts_path %>
+</div>
+<br />
+
+<div id="comment_section">
+  <h4>Comments:</h4>
+  <!--<p><%= render 'comments/form', comment: @comment %></p>-->
+  <ul class="list-group">
+    <% @post.comments.each do |comment| %>
+    <li class="list-group-item">
+      <div class="media">
+        <div class="media-object media-left" id= "comment_avatars">
+          <% if comment.user.avatar.url %>
+          <%= image_tag comment.user.avatar.url, class:"img-rounded", width:"48px"%>
+          <% else %>
+            <%= gravatar_tag comment.user.email, class:"img-rounded", size: 48 %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <p><%= link_to comment.user.username, user_posts_path(name: comment.user.username) %>:</p>
+          <p><%= comment.comment_entry %></p>
+        </div>
+      </div>
+    </li>
+
+  <% end %>
+</div>
+
+<div>
+  <%= link_to 'Add a Comment', new_comment_path(post_id: @post.id), {class: 'btn btn-primary'} %>
+</div>
+<br />
+</div>
